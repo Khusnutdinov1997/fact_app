@@ -41,10 +41,9 @@ fun HistoryScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(history){ fact ->
-                val isFactFavorite = favorites.contains(fact.id)
                 FactCard(
                     fact,
-                    isFavorite = isFactFavorite,
+                    isFavorite = favorites.contains(fact.id),
                     onFavoriteClick = {viewModel.toggleFavorite(fact.id)}
                 )
             }

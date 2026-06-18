@@ -29,7 +29,7 @@ import com.example.hilt.model.Fact
 fun FactCard(
     fact: Fact,
     isFavorite: Boolean,
-    onFavoriteClick: (Boolean) -> Unit
+    onFavoriteClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -53,14 +53,14 @@ fun FactCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Категория: ${fact.category}",
+                    text = "Категория: ${fact.category.displayName}",
                     style = MaterialTheme.typography.labelMedium
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 IconButton(
-                    onClick = {onFavoriteClick(true)},
+                    onClick = {onFavoriteClick()},
 
                 ){
                     Icon(
