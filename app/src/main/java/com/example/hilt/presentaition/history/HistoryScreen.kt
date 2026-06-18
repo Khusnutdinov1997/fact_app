@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.hilt.presentaition.companent.FactCard
 
 
 @Composable
@@ -37,10 +38,15 @@ fun HistoryScreen(
                 .systemBarsPadding()
                 .padding(16.dp),
             contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            //verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             items(history){ fact ->
-
+                val isFactFavorite = favorites.contains(fact.id)
+                FactCard(
+                    fact,
+                    isFavorite = isFactFavorite,
+                    onFavoriteClick = {viewModel.toggleFavorite(fact.id)}
+                )
             }
         }
     }
