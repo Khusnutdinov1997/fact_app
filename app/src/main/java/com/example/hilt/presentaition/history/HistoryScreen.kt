@@ -38,7 +38,7 @@ fun HistoryScreen(
                 .systemBarsPadding()
                 .padding(16.dp),
             contentPadding = PaddingValues(12.dp),
-            //verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(history){ fact ->
                 val isFactFavorite = favorites.contains(fact.id)
