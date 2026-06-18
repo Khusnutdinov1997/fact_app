@@ -20,7 +20,10 @@ class FavoritesViewModel @Inject constructor(
     private val _facts = MutableStateFlow<List<Fact>>(emptyList())
     val facts = _facts.asStateFlow()
 
-    // роль этого блока используется при создании экземпляра класса
+    /*
+    Блок init используется как пусковой механизм для настройки реактивных связей.
+    Он будет запущен после того, как Hilt создаст экземпляр viewModel.
+     */
     init {
         viewModelScope.launch {
             favoritesManager.favorites.collect { ids ->
