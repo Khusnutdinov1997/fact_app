@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(
 
     fun onEvent(mainEvent: MainEvent){
         when(mainEvent){
-            is MainEvent.LoadNewFact -> {}
+            is MainEvent.LoadNewFact -> {loadNewFact()}
             is MainEvent.ChangeCategory -> {changeCategory(mainEvent.category)}
             is MainEvent.ToggleFavorite -> {toggleFavorite(mainEvent.id)}
         }
@@ -36,6 +36,17 @@ class MainViewModel @Inject constructor(
 
     fun changeCategory(category: Category){
         _mainUiState.value = _mainUiState.value.copy(selectedCategory = category)
+    }
+
+    fun loadNewFact(){
+        _mainUiState.value = _mainUiState.value.copy(isLoadingFact = true)
+        try {
+            val newFact = repository.getRandomFact(_mainUiState.value.selectedCategory)
+            _mainUiState.value = _mainUiState.value.copy(currentFact = newFact, isLoadingFact = false)
+            historyManager.addFactToHistory(newFact)
+        }catch(e: Exception){
+            _mainUiState.value = _mainUiState.value.copy(error = "не удалось загрузить факт", isLoadingFact = false)
+        }
     }
 
 }
