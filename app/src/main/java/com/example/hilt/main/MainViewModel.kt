@@ -8,6 +8,7 @@ import com.example.hilt.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,17 +36,20 @@ class MainViewModel @Inject constructor(
     }
 
     fun changeCategory(category: Category){
-        _mainUiState.value = _mainUiState.value.copy(selectedCategory = category)
+        _mainUiState.update{ it.copy(selectedCategory = category)}
+        loadNewFact()
     }
 
     fun loadNewFact(){
-        _mainUiState.value = _mainUiState.value.copy(isLoadingFact = true)
+        _mainUiState.update{ it.copy(isLoadingFact = true)}
         try {
-            val newFact = repository.getRandomFact(_mainUiState.value.selectedCategory)
-            _mainUiState.value = _mainUiState.value.copy(currentFact = newFact, isLoadingFact = false)
+            val category = _mainUiState.value.selectedCategory
+            val newFact = repository.getRandomFact(category)
+
+            _mainUiState.update{ it.copy(currentFact = newFact, isLoadingFact = false)}
             historyManager.addFactToHistory(newFact)
         }catch(e: Exception){
-            _mainUiState.value = _mainUiState.value.copy(error = "не удалось загрузить факт", isLoadingFact = false)
+            _mainUiState.update{ it.copy(error = "не удалось загрузить факт", isLoadingFact = false)}
         }
     }
 
