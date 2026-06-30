@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: FactRepository,
-    private val favoritesManager: FavoritesManager,
+    val favoritesManager: FavoritesManager,
     private val historyManager: HistoryManager
 ): ViewModel(){
     private val _mainUiState = MutableStateFlow(MainUiState())
