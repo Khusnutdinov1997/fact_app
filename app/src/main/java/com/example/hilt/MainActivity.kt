@@ -8,6 +8,7 @@ import com.example.hilt.date.manager.FavoritesManager
 import com.example.hilt.date.manager.HistoryManager
 import com.example.hilt.model.Category
 import com.example.hilt.model.Fact
+import com.example.hilt.navigation.NavGraph
 import com.example.hilt.presentaition.favorites.FavoriteScreen
 import com.example.hilt.presentaition.favorites.FavoritesViewModel
 import com.example.hilt.presentaition.history.HistoryScreen
@@ -30,8 +31,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HiltTheme {
-                //FavoriteScreen()
-                HistoryScreen()
+                NavGraph()
             }
         }
     }
