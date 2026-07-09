@@ -37,19 +37,17 @@ class MainViewModel @Inject constructor(
 
     fun changeCategory(category: Category){
         _mainUiState.update{ it.copy(selectedCategory = category)}
-        loadNewFact()
     }
 
     fun loadNewFact(){
-        _mainUiState.update{ it.copy(isLoadingFact = true)}
+        _mainUiState.value = _mainUiState.value.copy(isLoadingFact = true)
         try {
-            val category = _mainUiState.value.selectedCategory
-            val newFact = repository.getRandomFact(category)
+            val newFact = repository.getRandomFact(_mainUiState.value.selectedCategory)
 
-            _mainUiState.update{ it.copy(currentFact = newFact, isLoadingFact = false)}
+            _mainUiState.value = _mainUiState.value.copy(currentFact = newFact, isLoadingFact = false, error = null)
             historyManager.addFactToHistory(newFact)
         }catch(e: Exception){
-            _mainUiState.update{ it.copy(error = "не удалось загрузить факт", isLoadingFact = false)}
+            _mainUiState.value = _mainUiState.value.copy(error = "не удалось загрузить факт", isLoadingFact = false)
         }
     }
 
